@@ -1,8 +1,9 @@
 package FizzBuzz
 
 import (
-	"fmt"
 	"strconv"
+	"strings"
+	"fmt"
 )
 
 var firstSpecialNum, secondSpecialNum int
@@ -12,47 +13,74 @@ func TwoSpecialNumber(a, b int) {
 	secondSpecialNum = b
 }
 
-func JudgeFirstSpecialNum(a int) bool {
-	if i := a % firstSpecialNum; i == 0 {
-		return true
+func isContainFirstSpecialNum(a int) bool {
+	loc := strings.Index(strconv.Itoa(a), strconv.Itoa(firstSpecialNum))
+	if loc < 0 {
+		return false
 	}
-	if j := a % 10; j == firstSpecialNum {
-		return true
+	return true
+}
+
+func isContainSecondSpecialNum(a int) bool {
+	loc := strings.Index(strconv.Itoa(a), strconv.Itoa(secondSpecialNum))
+	if loc < 0 {
+		return false
 	}
-	if k := a / 10; k == firstSpecialNum {
+	return true
+}
+
+func isDividFirstSpecialNum(a int) bool {
+	result := a % firstSpecialNum
+	if result == 0 {
 		return true
 	}
 	return false
 }
 
-func JudgeSecondSpecialNum(a int) bool {
-	if i := a % secondSpecialNum; i == 0 {
-		return true
-	}
-	if j := a % 10; j == secondSpecialNum {
-		return true
-	}
-	if k := a / 10; k == secondSpecialNum {
+func isDividSecondSpecialNum(a int) bool {
+	result := a % secondSpecialNum
+	if result == 0 {
 		return true
 	}
 	return false
 }
 
-func StudentSlogan(yourNum int) string {
-	if JudgeFirstSpecialNum(yourNum) == true && JudgeSecondSpecialNum(yourNum) == true {
+func isFizz(a int) bool {
+	if isContainFirstSpecialNum(a) == true || isDividFirstSpecialNum(a) == true {
+		return true
+	}
+	return false
+}
+
+func isBuzz(a int) bool {
+	if isContainSecondSpecialNum(a) == true || isDividSecondSpecialNum(a) == true {
+		return true
+	}
+	return false
+}
+
+func isFizzBuzz(a int) bool {
+	if isFizz(a) == true && isBuzz(a) == true {
+		return true
+	}
+	return false
+}
+
+func saySlogan(a int) string {
+	if isFizzBuzz(a) == true {
 		return "FizzBuzz"
-	} else if JudgeFirstSpecialNum(yourNum) == true && JudgeSecondSpecialNum(yourNum) == false {
-		return "Fizz"
-	} else if JudgeFirstSpecialNum(yourNum) == false && JudgeSecondSpecialNum(yourNum) == true {
-		return "Buzz"
-	} else {
-		return strconv.Itoa(yourNum)
 	}
+	if isFizz(a) == true {
+		return "Fizz"
+	}
+	if isBuzz(a) == true {
+		return "Buzz"
+	}
+	return strconv.Itoa(a)
 }
 
-func StartGame(a, b, sum int){
-	TwoSpecialNumber(a, b)
+func startGame(sum int) {
 	for i := 0; i < sum; i++ {
-		fmt.Println("student ", i, " say ", StudentSlogan(i))
+		fmt.Println("student ", i, " say ", saySlogan(i))
 	}
 }
