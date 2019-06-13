@@ -13,47 +13,30 @@ func TwoSpecialNumber(a, b int) {
 	secondSpecialNum = b
 }
 
-func isContainFirstSpecialNum(a int) bool {
-	loc := strings.Index(strconv.Itoa(a), strconv.Itoa(firstSpecialNum))
+func isContainSpecialNum(a, specialNum int) bool {
+	loc := strings.Index(strconv.Itoa(a), strconv.Itoa(specialNum))
 	if loc < 0 {
 		return false
 	}
 	return true
 }
 
-func isContainSecondSpecialNum(a int) bool {
-	loc := strings.Index(strconv.Itoa(a), strconv.Itoa(secondSpecialNum))
-	if loc < 0 {
-		return false
-	}
-	return true
-}
-
-func isDividFirstSpecialNum(a int) bool {
-	result := a % firstSpecialNum
-	if result == 0 {
-		return true
-	}
-	return false
-}
-
-func isDividSecondSpecialNum(a int) bool {
-	result := a % secondSpecialNum
-	if result == 0 {
+func isDividSpecialNum(a, specialNum int) bool {
+	if a % specialNum == 0 {
 		return true
 	}
 	return false
 }
 
 func isFizz(a int) bool {
-	if isContainFirstSpecialNum(a) == true || isDividFirstSpecialNum(a) == true {
+	if isContainSpecialNum(a, firstSpecialNum) == true || isDividSpecialNum(a, firstSpecialNum) == true {
 		return true
 	}
 	return false
 }
 
 func isBuzz(a int) bool {
-	if isContainSecondSpecialNum(a) == true || isDividSecondSpecialNum(a) == true {
+	if isContainSpecialNum(a, secondSpecialNum) == true || isDividSpecialNum(a, secondSpecialNum) == true {
 		return true
 	}
 	return false
